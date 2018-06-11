@@ -79,6 +79,15 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         if(getActivity().getIntent()!=null){
             Log.i("TESTING", "onCreateView: NOT NULL");
         }
+        mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("text/plain")
+                        .setText(mCursor.getString(ArticleLoader.Query.TITLE) + " " + mCursor.getString(ArticleLoader.Query.AUTHOR))
+                        .getIntent(), getString(R.string.action_share)));
+            }
+        });
         return mRootView;
     }
 
@@ -95,17 +104,6 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
 
 
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
-
-//        Log.i(TAG, "bindViews: " + (mCursor != null));
-//        if (mCursor != null) {
-//            Log.i(TAG, "bindViews: in BIND VIEWS");
-////            mRootView.setAlpha(0);
-//            mRootView.setVisibility(View.VISIBLE);
-//            //mRootView.animate().alpha(1);
-//            titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-//            //Date publishedDate = parsePublishedDate();
-//            bylineView.setText(mCursor.getString(ArticleLoader.Query.AUTHOR));
-//            bodyView.setText(mCursor.getString(ArticleLoader.Query.BODY));
         detailsLayout.setTitle(mCursor.getString(ArticleLoader.Query.TITLE));
         titleView.setText(mCursor.getString(ArticleLoader.Query.AUTHOR));
         bodyView.setText(mCursor.getString(ArticleLoader.Query.BODY));
@@ -125,15 +123,6 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         Log.i("TESTING", "onLoadFinished: " + mCursor.getCount());
         if (mCursor.getCount() > 0) {
             mCursor.moveToFirst();
-            // TODO: optimize
-//            while (!mCursor.isAfterLast()) {
-//                if (mCursor.getLong(ArticleLoader.Query._ID) == mStartId) {
-//                    final int position = mCursor.getPosition();
-////                    mPager.setCurrentItem(position, false);
-//                    break;
-//                }
-//                mCursor.moveToNext();
-//            }
             Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query._ID));
             Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query.AUTHOR));
             Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query.ASPECT_RATIO));
