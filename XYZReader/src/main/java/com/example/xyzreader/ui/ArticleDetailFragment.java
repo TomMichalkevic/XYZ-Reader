@@ -55,14 +55,6 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     public ArticleDetailFragment() {
     }
 
-//    public static ArticleDetailFragment newInstance(long itemId) {
-//        Bundle arguments = new Bundle();
-//        arguments.putLong(ARG_ITEM_ID, itemId);
-//        ArticleDetailFragment fragment = new ArticleDetailFragment();
-//        fragment.setArguments(arguments);
-//        return fragment;
-//    }
-
     public ArticleDetailActivity getActivityCast() {
         return (ArticleDetailActivity) getActivity();
     }
@@ -114,23 +106,13 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return ArticleLoader.newInstanceForItemId(getContext(), Long.parseLong(uri.getLastPathSegment()));
-        //return ArticleLoader.newAllArticlesInstance(this);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         mCursor = cursor;
-        Log.i("TESTING", "onLoadFinished: " + mCursor.getCount());
         if (mCursor.getCount() > 0) {
             mCursor.moveToFirst();
-            Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query._ID));
-            Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query.AUTHOR));
-            Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query.ASPECT_RATIO));
-            Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query.BODY));
-            Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query.PHOTO_URL));
-            Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE));
-            Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query.THUMB_URL));
-            Log.i("TESTING", "onLoadFinished: " + mCursor.getString(ArticleLoader.Query.TITLE));
             bindViews();
         }
     }

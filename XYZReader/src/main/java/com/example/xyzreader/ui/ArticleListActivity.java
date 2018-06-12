@@ -37,25 +37,13 @@ public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = ArticleListActivity.class.toString();
-    private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
-
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
-    // Use default locale format
-    private SimpleDateFormat outputFormat = new SimpleDateFormat();
-    // Most time functions can only handle 1902 - 2037
-    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2,1,1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
-
-        mToolbar = findViewById(R.id.toolbar);
-
-
-        final View toolbarContainerView = findViewById(R.id.toolbar_container);
 
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
@@ -149,22 +137,10 @@ public class ArticleListActivity extends AppCompatActivity implements
             return vh;
         }
 
-//        private Date parsePublishedDate() {
-//            try {
-//                String date = mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE);
-//                return dateFormat.parse(date);
-//            } catch (ParseException ex) {
-//                Log.e(TAG, ex.getMessage());
-//                Log.i(TAG, "passing today's date");
-//                return new Date();
-//            }
-//        }
-
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             mCursor.moveToPosition(position);
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            //Date publishedDate = parsePublishedDate();
             holder.subtitleView.setText(mCursor.getString(ArticleLoader.Query.AUTHOR));
             Picasso.with(getBaseContext()).load(mCursor.getString(ArticleLoader.Query.THUMB_URL)).into(holder.thumbnailView);
         }
@@ -182,9 +158,9 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         public ViewHolder(View view) {
             super(view);
-            thumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
-            titleView = (TextView) view.findViewById(R.id.article_title);
-            subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
+            thumbnailView = view.findViewById(R.id.thumbnail);
+            titleView = view.findViewById(R.id.article_title);
+            subtitleView = view.findViewById(R.id.article_subtitle);
         }
     }
 }

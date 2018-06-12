@@ -29,9 +29,6 @@ import com.example.xyzreader.data.ItemsContract;
 public class ArticleDetailActivity extends AppCompatActivity {
 
 
-    private long mStartId;
-    private Uri uri;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
